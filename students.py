@@ -41,17 +41,21 @@ def main():
     tk.Label(frame, text="Name:").grid(row=1, column=0, sticky="w", pady=2)
     tk.Label(frame, text="Age:").grid(row=2, column=0, sticky="w", pady=2)
     tk.Label(frame, text="Course:").grid(row=3, column=0, sticky="w", pady=2)
+    tk.Label(frame, text="Search (ID/Name):").grid(row=4, column=0, sticky="w", pady=2)
+
 
     e_id = tk.Entry(frame, width=30)
     e_name = tk.Entry(frame, width=30)
     e_age = tk.Entry(frame, width=30)
     e_course = tk.Entry(frame, width=30)
+    e_search = tk.Entry(frame, width=30)
+
 
     e_id.grid(row=0, column=1, pady=2, padx=5)
     e_name.grid(row=1, column=1, pady=2, padx=5)
     e_age.grid(row=2, column=1, pady=2, padx=5)
     e_course.grid(row=3, column=1, pady=2, padx=5)
-
+    e_search.grid(row=4, column=1, pady=2, padx=5)
     # Treeview
     columns = ("ID", "Name", "Age", "Course")
     tree = ttk.Treeview(root, columns=columns, show="headings", height=12)
@@ -75,6 +79,23 @@ def main():
         e_name.delete(0, tk.END)
         e_age.delete(0, tk.END)
         e_course.delete(0, tk.END)
+
+    def search_student():
+        keyword = e_search.get().strip().lower()
+        for item in tree.get_children():
+            tree.delete(item)
+        if not keyword:
+            refresh_list()
+            return
+        found = False
+        for s in students:
+            sid = str(s.get("id", "")).lower()
+            name = str(s.get("name", "")).lower()
+            if keyword in sid or keyword in name:
+                tree.insert("", tk.END, values=(s["id"], s["name"], s["age"], s["course"]))
+                found = True
+        if not found:
+            messagebox.showinfo("Search", "No matching student found.")
 
     def add_student():
         sid = e_id.get().strip()
@@ -138,7 +159,6 @@ def main():
                 refresh_list()
                 clear_fields()
                 messagebox.showinfo("Done", "Student deleted.")
-
     def on_select(event):
         sel = tree.selection()
         if sel:
@@ -150,6 +170,7 @@ def main():
             e_course.insert(0, vals[3])
 
     tree.bind("<<TreeviewSelect>>", on_select)
+    e_search.bind("<Return>", lambda event: search_student())
 
     # Buttons
     btn_frame = tk.Frame(root, pady=10)
@@ -159,6 +180,7 @@ def main():
     tk.Button(btn_frame, text="Update", command=update_student, width=10).pack(side=tk.LEFT, padx=5)
     tk.Button(btn_frame, text="Delete", command=delete_student, width=10).pack(side=tk.LEFT, padx=5)
     tk.Button(btn_frame, text="Clear", command=clear_fields, width=10).pack(side=tk.LEFT, padx=5)
+    tk.Button(btn_frame, text="Search", command=search_student, width=10).pack(side=tk.LEFT, padx=5)
 
     refresh_list()
     root.mainloop()
