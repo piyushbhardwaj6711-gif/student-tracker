@@ -1,33 +1,15 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import json
-import os
-
-DATA_FILE = "students.json"
-
-
-def load_students():
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, "r") as f:
-                return json.load(f)
-        except Exception:
-            return []
-    return []
-
-
-def save_students(students):
-    try:
-        with open(DATA_FILE, "w") as f:
-            json.dump(students, f, indent=2)
-        return True
-    except Exception as e:
-        messagebox.showerror("Error", f"Could not save: {e}")
-        return False
+from data import (
+    load_students as db_load_students,
+    add_student as db_add_student,
+    update_student as db_update_student,
+    delete_student as db_delete_student,
+)
 
 
 def main():
-    students = load_students()
+    students = db_load_students()
 
     root = tk.Tk()
     root.title("Student Record Manager")
@@ -93,6 +75,8 @@ def main():
     scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
     def refresh_list():
+        nonlocal students
+        students = db_load_students()
         for item in tree.get_children():
             tree.delete(item)
         for s in students:
@@ -121,7 +105,7 @@ def main():
         if not found:
             messagebox.showinfo("Search", "No matching student found.")
 
-    def add_student():
+    def add_student_ui():
         sid = e_id.get().strip()
         name = e_name.get().strip()
         age = e_age.get().strip()
@@ -137,13 +121,15 @@ def main():
         except ValueError:
             messagebox.showwarning("Warning", "Age must be a number.")
             return
-        students.append({"id": sid, "name": name, "age": age_int, "course": course})
-        if save_students(students):
+        try:
+            db_add_student(sid, name, age_int, course)
             refresh_list()
             clear_fields()
             messagebox.showinfo("Done", "Student added.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Could not add student: {e}")
 
-    def update_student():
+    def update_student_ui():
         sel = tree.selection()
         if not sel:
             messagebox.showwarning("Warning", "Select a student first.")
@@ -160,17 +146,20 @@ def main():
         except ValueError:
             messagebox.showwarning("Warning", "Age must be a number.")
             return
-        for i, s in enumerate(students):
-            if s["id"] == sid:
-                students[i] = {"id": sid, "name": name, "age": age_int, "course": course}
-                if save_students(students):
-                    refresh_list()
-                    clear_fields()
-                    messagebox.showinfo("Done", "Student updated.")
-                return
-        messagebox.showwarning("Warning", "Student not found.")
+        item = tree.item(sel[0])
+        original_id = item["values"][0]
+        if sid != original_id:
+            messagebox.showwarning("Warning", "ID cannot be changed while updating.")
+            return
+        try:
+            db_update_student(original_id, name, age_int, course)
+            refresh_list()
+            clear_fields()
+            messagebox.showinfo("Done", "Student updated.")
+        except Exception as e:
+            messagebox.showerror("Error", f"Could not update student: {e}")
 
-    def delete_student():
+    def delete_student_ui():
         sel = tree.selection()
         if not sel:
             messagebox.showwarning("Warning", "Select a student first.")
@@ -178,11 +167,13 @@ def main():
         item = tree.item(sel[0])
         sid = item["values"][0]
         if messagebox.askyesno("Confirm", f"Delete student '{sid}'?"):
-            students[:] = [s for s in students if s["id"] != sid]
-            if save_students(students):
+            try:
+                db_delete_student(sid)
                 refresh_list()
                 clear_fields()
                 messagebox.showinfo("Done", "Student deleted.")
+            except Exception as e:
+                messagebox.showerror("Error", f"Could not delete student: {e}")
     def on_select(event):
         sel = tree.selection()
         if sel:
@@ -200,9 +191,9 @@ def main():
     btn_frame = tk.Frame(root, pady=10)
     btn_frame.pack()
 
-    tk.Button(btn_frame, text="Add", command=add_student, width=10).pack(side=tk.LEFT, padx=5)
-    tk.Button(btn_frame, text="Update", command=update_student, width=10).pack(side=tk.LEFT, padx=5)
-    tk.Button(btn_frame, text="Delete", command=delete_student, width=10).pack(side=tk.LEFT, padx=5)
+    tk.Button(btn_frame, text="Add", command=add_student_ui, width=10).pack(side=tk.LEFT, padx=5)
+    tk.Button(btn_frame, text="Update", command=update_student_ui, width=10).pack(side=tk.LEFT, padx=5)
+    tk.Button(btn_frame, text="Delete", command=delete_student_ui, width=10).pack(side=tk.LEFT, padx=5)
     tk.Button(btn_frame, text="Clear", command=clear_fields, width=10).pack(side=tk.LEFT, padx=5)
     tk.Button(btn_frame, text="Search", command=search_student, width=10).pack(side=tk.LEFT, padx=5)
 
