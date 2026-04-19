@@ -1,0 +1,4 @@
+.env
+student tracker.env
+__pycache__/
+*.pyc

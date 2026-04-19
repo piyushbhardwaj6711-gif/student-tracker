@@ -1,20 +1,56 @@
 [
-  {
-    "id": "83",
-    "name": "lakshika",
-    "age": 64,
-    "course": "b.tech"
-  },
-  {
-    "id": "5565",
-    "name": "bhn",
-    "age": 4512,
-    "course": "gnbj"
-  },
-  {
-    "id": "17",
-    "name": "piyush",
-    "age": 19,
-    "course": "b.tech"
-  }
-]
+  {"id":"101","name":"Aarav Sharma","age":20,"course":"Computer Science"},
+  {"id":"102","name":"Priya Verma","age":19,"course":"Information Technology"},
+  {"id":"103","name":"Rohan Mehta","age":21,"course":"Mechanical Engineering"},
+  {"id":"104","name":"Sneha Gupta","age":20,"course":"Electronics"},
+  {"id":"105","name":"Kunal Singh","age":22,"course":"Civil Engineering"},
+  {"id":"106","name":"Ananya Kapoor","age":19,"course":"Electrical Engineering"},
+  {"id":"107","name":"Vikram Yadav","age":21,"course":"Data Science"},
+  {"id":"108","name":"Ishita Jain","age":20,"course":"Artificial Intelligence"},
+  {"id":"109","name":"Mohit Choudhary","age":23,"course":"BCA"},
+  {"id":"110","name":"Simran Kaur","age":18,"course":"BBA"},
+  
+  {"id":"111","name":"Rahul Raj","age":21,"course":"Computer Science"},
+  {"id":"112","name":"Neha Saini","age":20,"course":"Information Technology"},
+  {"id":"113","name":"Aditya Mishra","age":22,"course":"Mechanical Engineering"},
+  {"id":"114","name":"Pooja Sharma","age":19,"course":"Electronics"},
+  {"id":"115","name":"Deepak Kumar","age":23,"course":"Civil Engineering"},
+  {"id":"116","name":"Kritika Jain","age":20,"course":"Electrical Engineering"},
+  {"id":"117","name":"Manish Verma","age":21,"course":"Data Science"},
+  {"id":"118","name":"Ritika Singh","age":19,"course":"Artificial Intelligence"},
+  {"id":"119","name":"Sahil Khan","age":22,"course":"BCA"},
+  {"id":"120","name":"Tanya Arora","age":18,"course":"BBA"},
+  
+  {"id":"121","name":"Arjun Patel","age":21,"course":"Computer Science"},
+  {"id":"122","name":"Megha Gupta","age":20,"course":"Information Technology"},
+  {"id":"123","name":"Nikhil Yadav","age":22,"course":"Mechanical Engineering"},
+  {"id":"124","name":"Sakshi Bansal","age":19,"course":"Electronics"},
+  {"id":"125","name":"Ravi Sharma","age":23,"course":"Civil Engineering"},
+  {"id":"126","name":"Divya Sharma","age":20,"course":"Electrical Engineering"},
+  {"id":"127","name":"Aman Jain","age":21,"course":"Data Science"},
+  {"id":"128","name":"Komal Verma","age":19,"course":"Artificial Intelligence"},
+  {"id":"129","name":"Harsh Agarwal","age":22,"course":"BCA"},
+  {"id":"130","name":"Nisha Singh","age":18,"course":"BBA"},
+  
+  {"id":"131","name":"Yash Gupta","age":21,"course":"Computer Science"},
+  {"id":"132","name":"Palak Saini","age":20,"course":"Information Technology"},
+  {"id":"133","name":"Rajat Kumar","age":22,"course":"Mechanical Engineering"},
+  {"id":"134","name":"Payal Sharma","age":19,"course":"Electronics"},
+  {"id":"135","name":"Abhishek Verma","age":23,"course":"Civil Engineering"},
+  {"id":"136","name":"Shreya Jain","age":20,"course":"Electrical Engineering"},
+  {"id":"137","name":"Kartik Mehta","age":21,"course":"Data Science"},
+  {"id":"138","name":"Isha Kapoor","age":19,"course":"Artificial Intelligence"},
+  {"id":"139","name":"Gaurav Singh","age":22,"course":"BCA"},
+  {"id":"140","name":"Muskan Arora","age":18,"course":"BBA"},
+  
+  {"id":"141","name":"Varun Sharma","age":21,"course":"Computer Science"},
+  {"id":"142","name":"Riya Gupta","age":20,"course":"Information Technology"},
+  {"id":"143","name":"Siddharth Jain","age":22,"course":"Mechanical Engineering"},
+  {"id":"144","name":"Tanvi Verma","age":19,"course":"Electronics"},
+  {"id":"145","name":"Ankit Yadav","age":23,"course":"Civil Engineering"},
+  {"id":"146","name":"Bhavya Kapoor","age":20,"course":"Electrical Engineering"},
+  {"id":"147","name":"Karan Singh","age":21,"course":"Data Science"},
+  {"id":"148","name":"Aditi Sharma","age":19,"course":"Artificial Intelligence"},
+  {"id":"149","name":"Rohit Meena","age":22,"course":"BCA"},
+  {"id":"150","name":"Pooja Yadav","age":18,"course":"BBA"}
+  ]
