@@ -348,7 +348,31 @@ def main():
     form_panel.config(width=360)
     form_panel.pack_propagate(False)
 
-    form_head = tk.Frame(form_panel, bg=PANEL)
+    # Keep form usable on smaller screens by scrolling only fields.
+    # Action buttons stay fixed at the bottom so they are always visible.
+    form_body = tk.Frame(form_panel, bg=PANEL)
+    form_body.pack(side="top", fill="both", expand=True)
+
+    form_canvas = tk.Canvas(form_body, bg=PANEL, highlightthickness=0, bd=0)
+    form_scrollbar = ttk.Scrollbar(form_body, orient="vertical", command=form_canvas.yview, style="Vertical.TScrollbar")
+    form_canvas.configure(yscrollcommand=form_scrollbar.set)
+
+    form_canvas.pack(side="left", fill="both", expand=True)
+    form_scrollbar.pack(side="right", fill="y")
+
+    form_content = tk.Frame(form_canvas, bg=PANEL)
+    form_window = form_canvas.create_window((0, 0), window=form_content, anchor="nw")
+
+    def _sync_form_scroll_region(event=None):
+        form_canvas.configure(scrollregion=form_canvas.bbox("all"))
+
+    def _sync_form_width(event):
+        form_canvas.itemconfigure(form_window, width=event.width)
+
+    form_content.bind("<Configure>", _sync_form_scroll_region)
+    form_canvas.bind("<Configure>", _sync_form_width)
+
+    form_head = tk.Frame(form_content, bg=PANEL)
     form_head.pack(fill="x", padx=22, pady=(22, 14))
 
     tk.Label(
@@ -367,7 +391,7 @@ def main():
         bg=PANEL
     ).pack(anchor="w", pady=(4, 0))
 
-    form_fields = tk.Frame(form_panel, bg=PANEL)
+    form_fields = tk.Frame(form_content, bg=PANEL)
     form_fields.pack(fill="x", padx=22, pady=(6, 10))
 
     entries = {}
@@ -387,7 +411,7 @@ def main():
     e_search = entries["Search"]
 
     button_frame = tk.Frame(form_panel, bg=PANEL)
-    button_frame.pack(fill="x", padx=22, pady=(18, 18))
+    button_frame.pack(side="bottom", fill="x", padx=22, pady=(12, 18))
 
     btn_add = create_button(button_frame, "Add Student", lambda: add_student_ui(), SUCCESS, SUCCESS_HOVER)
     btn_update = create_button(button_frame, "Update Student", lambda: update_student_ui(), PRIMARY, PRIMARY_HOVER)
